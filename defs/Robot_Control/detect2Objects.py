@@ -20,7 +20,7 @@ def handleCameraOutput(side, page):
     # check if no block
     if len(x1) < 2:
         # No block found
-        return
+        handleCameraOutput(side, page)
     else:
         # NO. Blocks > 0
         if objectLocated == 1:
@@ -43,7 +43,8 @@ def locateObjectsLeft():
     page = urllib.request.urlopen('http://10.1.1.8/CmdChannel?TRIG')
     time.sleep(2)
     page = urllib.request.urlopen('http://10.1.1.8/CmdChannel?gRES')
-    handleCameraOutput("left", page)
+    x,y = handleCameraOutput("left", page)
+    return x, y
 
    
 
@@ -52,7 +53,7 @@ def locateObjectsRight():
     page = urllib.request.urlopen('http://10.1.1.7/CmdChannel?TRIG')
     time.sleep(2)
     page = urllib.request.urlopen('http://10.1.1.7/CmdChannel?gRES')
-    handleCameraOutput("right", page)
+    x,y = handleCameraOutput("right", page)
    
         
   
@@ -71,9 +72,9 @@ def switchObject():
     print("object switched")
 
 def checkLeftCamera(): 
-    while switchCounter < 3:
-        locateObjectsLeft()
-        switchObject()
+#    while switchCounter < 3:
+    return locateObjectsLeft()
+#        switchObject()
 
 def checkRightCamera(): 
     while switchCounter < 3:

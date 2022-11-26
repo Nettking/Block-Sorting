@@ -21,10 +21,12 @@ def checkSensorReadingsRight():
     sensorRight = cS.checkConveyorSensor(cS.sensorRight)
     
     if sensorRight <= 30:
-        conveyor.setConveyorSpeed(0.012)
-        conveyor.reverseConveyor()
-        conveyor.time.sleep(20)
-        conveyor.stopConveyor()
+        if sensorLeft >= 30:
+            status = 'Sending right'
+            conveyor.setConveyorSpeed(0.012)
+            conveyor.reverseConveyor()
+            conveyor.time.sleep(20)
+            conveyor.stopConveyor()
             
 
 def readRightSide():
@@ -36,7 +38,7 @@ def readRightSide():
 
 def readLeftSide():
     count = 0
-    while count < 8:
+    while count < 2:
         count += 1
         checkSensorReadingsLeft()
         time.sleep(0.3)
