@@ -2,7 +2,7 @@ import urx
 from defs.Robot_Control.Gripper import *
 
 class Robot:
-    def __init__(self, ip, side,):
+    def __init__(self, ip, side):
         self.ip = ip
         self.side = side    
         
