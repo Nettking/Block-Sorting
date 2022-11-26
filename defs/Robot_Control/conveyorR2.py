@@ -41,8 +41,3 @@ def setConveyorSpeed(voltage):
 
 
 
-setConveyorSpeed(0.012)
-startConveyor()
-time.sleep(3)
-stopConveyor()
-rob2.close()

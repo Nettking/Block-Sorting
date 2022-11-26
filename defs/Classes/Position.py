@@ -1,6 +1,6 @@
 class Position:
     # Constructor with all parameters for positions
-    def __init__(self, x, y, z, rx, ry, rz):
+    def __init__(self, x, y, z=0, rx=0, ry=0, rz=0):
         self.x = x
         self.y = y    
         self.z = z
@@ -8,18 +8,10 @@ class Position:
         self.ry = ry    
         self.rz = rz
     
-    # Constructor with positions only using x and y
-#    def __init__(self, x, y):
-#        self.x = x
-#        self.y = y    
-#        self.z = 0
-#        self.rx = 0
-#        self.ry = 0    
-#        self.rz = 0
     
     # To string representation
     def __str__(self):
-        return f"{self.x} {self.y} {self.z} {self.rx} {self.ry} {self.rz}"
+        return f"{self.x}, {self.y}, {self.z}, {self.rx}, {self.ry}, {self.rz}"
     
     # Getters
     def getX(self):

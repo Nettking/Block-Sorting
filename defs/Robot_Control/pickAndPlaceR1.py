@@ -8,7 +8,7 @@ import time
 r1="10.1.1.6"
 
 #connects to robot
-rob = urx.Robot(r1, use_rt=True, urFirm=5.1)
+rob = urx.Robot(r1)#, use_rt=True, urFirm=5.1)
 
 #robot velocity and acceleration
 v = 0.8
@@ -66,13 +66,14 @@ def pickObject():
     rob.send_program(rq_open())
     time.sleep(0.1)
     move(rob, overPickPos, True)
-    move(rob, pickPos, True)
+    '''move(rob, pickPos, True)
     #closes gripper
     rob.send_program(rq_close())
     #sleep to allow gripper to close fully before program resumes
     time.sleep(0.6)
     move(rob, overPickPos, True)
     move(rob, placeObject, True)
+    '''
     rob.send_program(rq_open())
     time.sleep(0.2)
 

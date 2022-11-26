@@ -1,8 +1,8 @@
 import urx
 import time
-from threading import Thread
+
 import sys
-import Gripper
+from Gripper import *
 
 #set robot ip adresses
 r1="10.1.1.6"
@@ -52,7 +52,7 @@ def handOverrob():
         time.sleep(0.1)
     move(rob, handover1, True)
     robMoving = True
-    rob.send_program(rq_open())
+    #rob.send_program(rq_open())
     time.sleep(0.3)
     move(rob, handover1b, True)
     move(rob, handoverVia, True)
@@ -69,7 +69,7 @@ def handOverrob2():
     move(rob2, handover2, True)
     rob2Moving = True
     time.sleep(0.25)
-    rob2.send_program(rq_close())
+    #rob2.send_program(rq_close())
     time.sleep(0.4)
     move(rob2, handover2b, True)
     move(rob2, placeObjectVia, True)
@@ -97,24 +97,3 @@ def moverob2():
             break
         handOverrob2()
 
-rob.send_program(rq_activate())
-time.sleep(2.5)
-rob2.send_program(rq_activate())
-time.sleep(2.5)
-rob.send_program(rq_set_speed(250))
-time.sleep(0.1)
-rob.send_program(rq_set_force(10))
-time.sleep(0.1)
-rob2.send_program(rq_set_speed(250))
-time.sleep(0.1)
-rob2.send_program(rq_set_force(10))
-time.sleep(0.1)
-rob.set_tcp((0,0,0.16,0,0,0))
-rob2.set_tcp((0,0,0.16,0,0,0))
-        
-Thread(target = moverob).start()
-Thread(target = moverob2).start()
-
-time.sleep(30)
-
-programComplete()
