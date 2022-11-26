@@ -9,13 +9,13 @@ class Position:
         self.rz = rz
     
     # Constructor with positions only using x and y
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y    
-        self.z = 0
-        self.rx = 0
-        self.ry = 0    
-        self.rz = 0
+#    def __init__(self, x, y):
+#        self.x = x
+#        self.y = y    
+#        self.z = 0
+#        self.rx = 0
+#        self.ry = 0    
+#        self.rz = 0
     
     # To string representation
     def __str__(self):
