@@ -11,7 +11,8 @@ class Camera:
     def getSide(self):
         return self.side
 
-    def getRes(ip):
+    def getRes(self):
+        ip = self.ip
         res = urllib.request.urlopen('http://'+ip+'/CmdChannel?TRIG')
         time.sleep(2)
         res = urllib.request.urlopen('http://'+ip+'/CmdChannel?gRES')

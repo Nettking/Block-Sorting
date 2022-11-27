@@ -3,11 +3,18 @@ from Gripper import *
 #import urllib.request
 import time
 import ConveyorController as CC
-import detect2Objects as d2o
+import defs.Classes.Camera as cam
+import defs.Classes.Robot as robot
+
 
 sentBlocks = 0
 pos_multiplyer = 0.06
 block_y_pos = -0.22 - (sentBlocks*pos_multiplyer)
+
+cameraLeft = cam.Camera("10.1.1.8", "left")
+cameraRight = cam.Camera("10.1.1.7", "Right")
+rob = robot.robLeft
+rob2 = robot.robRight
 
 def activateAndOpenGripper(rob):
     #activates gripper. only needed once per power cycle
@@ -60,11 +67,11 @@ def pickUpFromConveyor(rob):
     
 def sendLeftToRight(rob, rob2):
     print("[GETTING X,Y FROM LEFT CAMERA]")
-    x,y = d2o.checkLeftCamera()
+    x,y = cam.checkLeftCamera()
 
     print("[VALIDATING X AND Y]")
     if (x == None or y == None):
-        x, y = d2o.checkLeftCamera()
+        x, y = cam.checkLeftCamera()
 
     print(f"[POST VALIDATION X AND Y][X = {x}, Y = {y}]")
     positionPickUp = (x,y,0.40,0,3.14,0)
@@ -97,7 +104,7 @@ def sendRightToLeft():
 
 def pickupObjectLeftSide(rob):
     print("[GETTING X,Y FROM LEFT CAMERA]")
-    x, y = d2o.checkLeftCamera() 
+    x, y = cam.checkLeftCamera() 
     time.sleep(2)
 
 
@@ -127,9 +134,6 @@ def move(robot, location, moveWait=True):
 if __name__ =="__main__":
     #r1="10.1.1.5"
     #rob = urx.Robot(r1, use_rt=True, urFirm=5.1)
-
-    r2="10.1.1.6"
-    rob2 = urx.Robot(r2, use_rt=True, urFirm=5.1)
 
     #activateAndOpenGripper(rob)
     activateAndOpenGripper(rob2)

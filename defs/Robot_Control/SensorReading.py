@@ -1,12 +1,15 @@
+import time
 import requests
-import asyncio
 import time
 
-
+#Set sensor port numbers with names that makes sense
 sensorLeft = 4
 sensorMiddleLeft = 3
 sensorMiddleRight = 2
 sensorRight = 1
+
+
+
 
 def checkConveyorSensor(sensor):
     if sensor == sensorLeft: 
@@ -34,13 +37,12 @@ def checkConveyorSensor(sensor):
         print("Object found")
     return p
 
+global sensorReadingLeft, sensorReadingRight
+sensorReadingRight = checkConveyorSensor(sensorRight)
+sensorReadingLeft = checkConveyorSensor(sensorLeft)
 
 
 
 
-def checkConveyorSensors():
-    checkConveyorSensor(sensorLeft)
-    checkConveyorSensor(sensorMiddleLeft)
-    checkConveyorSensor(sensorMiddleRight)
-    checkConveyorSensor(sensorRight)
 
+    

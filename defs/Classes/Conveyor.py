@@ -1,9 +1,15 @@
-import urx
 import time
+import requests
+import time
+import urx
+import defs.Classes.Robot as Robot
 
-#robot to the right
-r2="10.1.1.5"
-rob2 = urx.Robot(r2, use_rt=True, urFirm=5.1)
+#Access robot connected to conveyor
+rob2 = Robot.robRight
+
+
+
+
 
 def startConveyor():
     #start coveyor

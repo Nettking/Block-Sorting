@@ -1,12 +1,12 @@
-import conveyorSensors as cS
-import conveyorR2 as conveyor
+import SensorReading as SR
+import defs.Classes.Conveyor as conveyor
 import time
-
 
         
 def checkSensorReadingsLeft():         
     # Get sensor data
-    sensorLeft = cS.checkConveyorSensor(cS.sensorLeft)
+    sensorLeft = SR.checkConveyorSensor(SR.sensorLeft)
+    
 
     if sensorLeft <= 30:
         conveyor.setConveyorSpeed(0.012)
@@ -18,7 +18,7 @@ def checkSensorReadingsLeft():
 
 def checkSensorReadingsRight():
     # Get sensor data
-    sensorRight = cS.checkConveyorSensor(cS.sensorRight)
+    sensorRight = SR.checkConveyorSensor(SR.sensorRight)
     
     if sensorRight <= 30:
         if sensorLeft >= 30:
