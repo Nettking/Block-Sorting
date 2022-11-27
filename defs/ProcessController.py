@@ -12,22 +12,26 @@ def initialize():
 
     try:
         robLeft = RC.rob
+        time.sleep(0.3)
     except:
         print("Failed to initialize robot #1")
 
     try:    
         robRight = RC.rob2
+        time.sleep(0.3)
     except:
         print("Failed to initialize robot #2")
 
     ## Aktiver og åpne kloer
     try:
         RC.activateAndOpenGripper(robLeft)
+        time.sleep(0.3)
     except:
         print("Failed to activate and open gripper #1")
     
     try:
         RC.activateAndOpenGripper(robRight)
+        time.sleep(0.3)
     except:
         print("Failed to activate and open gripper #2")
     
