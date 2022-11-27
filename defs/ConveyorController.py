@@ -1,5 +1,6 @@
+import Robot_Control.SensorReading as SR
 import time
-import defs.Classes.Robot as Robot
+import Classes.Robot as Robot
 
 #Access robot connected to conveyor
 rob2 = Robot.robRight
@@ -43,4 +44,33 @@ def setConveyorSpeed(voltage):
 
 
 
+
+
+        
+def checkSensorReadingsLeft():         
+    # Get sensor data
+    sensorLeft = SR.checkConveyorSensor(SR.sensorLeft)
+    
+    # If block found start conveyor belt
+    if sensorLeft <= 30:
+        setConveyorSpeed(0.012)
+        startConveyor()
+        time.sleep(20)
+        stopConveyor()
+        
+
+
+def checkSensorReadingsRight():
+    # Get sensor data
+    sensorRight = SR.checkConveyorSensor(SR.sensorRight)
+    
+    # If block found start conveyor belt
+    if sensorRight <= 30:
+        setConveyorSpeed(0.012)
+        reverseConveyor()
+        time.sleep(20)
+        stopConveyor()
+
+
+checkSensorReadingsLeft()
 

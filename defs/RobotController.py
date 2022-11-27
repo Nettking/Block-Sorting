@@ -1,8 +1,9 @@
-from Gripper import *
+from Robot_Control.Gripper import *
 import time
 import ConveyorController as CC
 import defs.Classes.Camera as cam
 import defs.Classes.Robot as robot
+import Conveyor as conveyor
 
 
 sentBlocks = 0
@@ -13,6 +14,14 @@ cameraLeft = cam.Camera("10.1.1.8", "left")
 cameraRight = cam.Camera("10.1.1.7", "Right")
 rob = robot.robLeft
 rob2 = robot.robRight
+
+def move(robot, location, moveWait=True):
+    #moves robot
+    robot.movex("movel", location,wait=moveWait, acc=0.5, vel=0.8, relative=False, threshold=None)
+    if moveWait == False:
+        time.sleep(0.1)
+
+
 
 def activateAndOpenGripper(rob):
     #activates gripper. only needed once per power cycle
@@ -63,21 +72,24 @@ def pickUpFromConveyor(rob):
     move(rob, pos1)
 
     
-def sendLeftToRight(rob, rob2):
+def sendLeftToRight(rob):
+    
     print("[GETTING X,Y FROM LEFT CAMERA]")
-    x,y = cam.checkLeftCamera()
+    camera = cameraLeft
+    x, y = camera.checkForBlock()
+
 
     print("[VALIDATING X AND Y]")
     if (x == None or y == None):
-        x, y = cam.checkLeftCamera()
+        x, y = camera.checkForBlock()
 
     print(f"[POST VALIDATION X AND Y][X = {x}, Y = {y}]")
     positionPickUp = (x,y,0.40,0,3.14,0)
 
     print("[MOVING ROBOT 2]")
     positionPickUpDown = (x,y,0.15,0,3.14,0)
-    move(rob2, positionPickUp)
-    move(rob2, positionPickUpDown)
+    move(rob, positionPickUp)
+    move(rob, positionPickUpDown)
     rob2.send_program(rq_close())
     time.sleep(3)
 
@@ -97,7 +109,12 @@ def sendLeftToRight(rob, rob2):
     print("DONE WITH sendLeftToRight")
 
 def sendRightToLeft():
-    CC.checkSensorReadingsRight()
+    sensorLeft = CC.checkSensorReadingsLeft()
+    if sensorLeft <= 30:
+        conveyor.setConveyorSpeed(0.012)
+        conveyor.reverseConveyor()
+        conveyor.time.sleep(20)
+        conveyor.stopConveyor()
     
 
 def pickupObjectLeftSide(rob):
@@ -121,12 +138,6 @@ def pickupObjectLeftSide(rob):
     time.sleep(3)
 
 
-def move(robot, location, moveWait=True):
-    #moves robot
-    robot.movex("movel", location,wait=moveWait, acc=0.5, vel=0.8, relative=False, threshold=None)
-    if moveWait == False:
-        time.sleep(0.1)
-
 
 
 if __name__ =="__main__":
@@ -136,6 +147,8 @@ if __name__ =="__main__":
     #activateAndOpenGripper(rob)
     activateAndOpenGripper(rob2)
 
+    sendLeftToRight()
+    pickUpFromConveyor(rob2)
     '''
     for i in range(4):
         sendLeftToRight(rob)
@@ -144,6 +157,7 @@ if __name__ =="__main__":
     #sendLeftToRight(rob, rob2)
     #rob.close()
 
-    pickupObjectLeftSide(rob2)
+    #pickupObjectLeftSide(rob2)
 
     rob2.close()
+    

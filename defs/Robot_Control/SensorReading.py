@@ -8,9 +8,6 @@ sensorMiddleLeft = 3
 sensorMiddleRight = 2
 sensorRight = 1
 
-
-
-
 def checkConveyorSensor(sensor):
     if sensor == sensorLeft: 
         r = requests.post('http://10.1.1.9', json={"code":"request","cid":1,"adr":"/getdatamulti","data":{"datatosend":["/iolinkmaster/port[4]/iolinkdevice/pdin"]}})
