@@ -75,30 +75,32 @@ def getImputFromLeftCamera():
     print("[GETTING X,Y FROM LEFT CAMERA]")
     camera = cameraLeft
     x, y = camera.checkForBlock()
-    return x, y
-
-def sendLeftToRight(rob):
-    
-    x,y = getImputFromLeftCamera()
-
     print("[VALIDATING X AND Y]")
     if (x == None or y == None):
         x, y = camera.checkForBlock()
+    return x, y
 
+def setPositionFromCameraInputLeft():
+    x, y = getImputFromLeftCamera()
     print(f"[POST VALIDATION X AND Y][X = {x}, Y = {y}]")
     positionPickUp = (x,y,0.40,0,3.14,0)
-
-    print("[MOVING ROBOT 2]")
     positionPickUpDown = (x,y,0.15,0,3.14,0)
+    return positionPickUp, positionPickUpDown
+
+def sendLeftToRight(rob):
+    positionPickUp, positionPickUpDown = setPositionFromCameraInputLeft()
+    print("[MOVING ROBOT]")    
     move(rob, positionPickUp)
     move(rob, positionPickUpDown)
     rob2.send_program(rq_close())
     time.sleep(3)
 
+
+'''
     print("[FINISHED MOVING ROBOT 2]")
     time.sleep(3)
     sensorvalue = 0
-    sensorValue = CC.checkSensorReadingsLeft()
+    CC.checkSensorReadingsLeft()
     time.sleep(2)
     print("DONE CHECKING SENSORS")
     if sensorValue != 0 or sensorValue != None:
@@ -109,15 +111,17 @@ def sendLeftToRight(rob):
         block_y_pos = -0.22 - (sentBlocks*pos_multiplyer)
 
     print("DONE WITH sendLeftToRight")
+'''
 
 def sendRightToLeft():
-    sensorLeft = CC.checkSensorReadingsLeft()
+    #sensorLeft = CC.checkSensorReadingsLeft()
+    return
 
     
 
 def pickupObjectLeftSide(rob):
     print("[GETTING X,Y FROM LEFT CAMERA]")
-    x, y = cam.checkLeftCamera() 
+    #x, y = cam.checkLeftCamera() 
     time.sleep(2)
 
 
@@ -145,8 +149,9 @@ if __name__ =="__main__":
     #activateAndOpenGripper(rob)
     activateAndOpenGripper(rob2)
 
+    #
     sendLeftToRight()
-    pickUpFromConveyor(rob2)
+    #pickUpFromConveyor(rob2)
     '''
     for i in range(4):
         sendLeftToRight(rob)

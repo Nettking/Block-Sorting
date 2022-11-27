@@ -26,7 +26,7 @@ class Camera:
         coords = res.read().decode('utf-8')
         #splits output
         x1 = coords.split(",")
-        whichObject = int(x1[1])
+        #whichObject = int(x1[1])
         objectLocated = int(x1[2])
 
         # check if no block
@@ -44,6 +44,7 @@ class Camera:
                 return x, y
     
     def checkForBlock(self):
+        '''Check for block'''
         camera = self
         res = camera.getRes(camera.ip)
         x, y = camera.processRes(res)
