@@ -16,7 +16,7 @@ rob2 = robot.robRight
 
 def move(robot, location, moveWait=True):
     #moves robot
-    robot.movex("movel", location,wait=moveWait, acc=0.5, vel=0.8, relative=False, threshold=None)
+    robot.movex("movep", location,wait=moveWait, acc=0.5, vel=0.8, relative=False, threshold=None)
     if moveWait == False:
         time.sleep(0.1)
 
@@ -73,19 +73,24 @@ def pickUpFromConveyor(rob):
     
 def getImputFromLeftCamera():
     print("[GETTING X,Y FROM LEFT CAMERA]")
-    camera = cameraLeft
+    x,y = cam.resultCameraLeft
+    return x,y
+    
+    '''
     x, y = camera.checkForBlock()
     print("[VALIDATING X AND Y]")
     if (x == None or y == None):
         x, y = camera.checkForBlock()
     return x, y
+'''
+
 
 def setPositionFromCameraInputLeft():
-    x, y = getImputFromLeftCamera()
+    x,y = getImputFromLeftCamera()
     print(f"[POST VALIDATION X AND Y][X = {x}, Y = {y}]")
     positionPickUp = (x,y,0.40,0,3.14,0)
     positionPickUpDown = (x,y,0.15,0,3.14,0)
-    return positionPickUp, positionPickUpDown
+    return positionPickUp
 
 def sendLeftToRight(rob):
     positionPickUp, positionPickUpDown = setPositionFromCameraInputLeft()
@@ -146,11 +151,16 @@ if __name__ =="__main__":
     #r1="10.1.1.5"
     #rob = urx.Robot(r1, use_rt=True, urFirm=5.1)
 
-    activateAndOpenGripper(rob)
-    activateAndOpenGripper(rob2)
-
+    #activateAndOpenGripper(rob)
+    #activateAndOpenGripper(rob2)
+    #x,y = getImputFromLeftCamera()
+    positionPickUp = 0.2,0.2,0.40,0,3.14,0
+    #position = setPositionFromCameraInputLeft()
+    #print(position)
+    #move(rob, positionPickUp)
     #sendLeftToRight()
-    #pickUpFromConveyor(rob2)
+    #
+    pickUpFromConveyor(rob2)
     '''
     for i in range(4):
         sendLeftToRight(rob)
@@ -160,6 +170,8 @@ if __name__ =="__main__":
     #rob.close()
 
     #pickupObjectLeftSide(rob2)
+
+
 
     rob2.close()
     
