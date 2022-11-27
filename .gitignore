@@ -1,3 +1,4 @@
 
 defs/Robot_Control/__pycache__/Gripper.cpython-310.pyc
 *.pyc
+.vscode
