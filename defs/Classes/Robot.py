@@ -1,5 +1,5 @@
 import urx
-from defs.Robot_Control.Gripper import *
+from Robot_Control.Gripper import *
 
 class Robot:
     def __init__(self, ip, side):
