@@ -35,6 +35,14 @@ def activateAndOpenGripper(rob):
     rob.send_program(rq_open())
     time.sleep(2)
 
+def closeGripper(rob):
+    rob.send_program(rq_close())
+    time.sleep(1)
+
+def openGripper(rob):
+    rob.send_program(rq_open())
+    time.sleep(1)
+
 def pickUpFromConveyor(rob):
     global block_y_pos
 
@@ -54,7 +62,7 @@ def pickUpFromConveyor(rob):
     move(rob, pos4)
     move(rob, pos5)
 
-    rob.send_program(rq_close())
+    closeGripper(rob)
     time.sleep(3)
 
     move(rob, pos4)
@@ -64,7 +72,7 @@ def pickUpFromConveyor(rob):
     move(rob, pos6)
     move(rob, pos7)
 
-    rob.send_program(rq_open())
+    openGripper(rob)
     time.sleep(2)
 
     move(rob, pos6)
@@ -74,29 +82,29 @@ def pickUpFromConveyor(rob):
 def getImputFromLeftCamera():
     print("[GETTING X,Y FROM LEFT CAMERA]")
     x,y = cam.resultCameraLeft
-    return x,y
-    
-    '''
-    x, y = camera.checkForBlock()
+
     print("[VALIDATING X AND Y]")
     if (x == None or y == None):
-        x, y = camera.checkForBlock()
+        time.sleep(0.1)
+        x, y = cam.resultCameraLeft
+        time.sleep(0.5)
     return x, y
-'''
+
 
 
 def setPositionFromCameraInputLeft():
     x,y = getImputFromLeftCamera()
     print(f"[POST VALIDATION X AND Y][X = {x}, Y = {y}]")
-    positionPickUp = (x,y,0.40,0,3.14,0)
-    positionPickUpDown = (x,y,0.15,0,3.14,0)
-    return positionPickUp
+    positionPickUp = tuple(x,y,0.40,0,3.14,0)
+    positionPickUpDown = tuple(x,y,0.15,0,3.14,0)
+    return positionPickUp, positionPickUpDown
 
-def sendLeftToRight(rob):
-    positionPickUp = setPositionFromCameraInputLeft()
+def sendLeftToRight():
+    positionPickUp, positionPickUpDown = setPositionFromCameraInputLeft()
     print("[MOVING ROBOT]")    
     move(rob, positionPickUp)
-    rob2.send_program(rq_close())
+    move(rob, positionPickUpDown)
+    rob.send_program(rq_close())
     time.sleep(3)
 
 

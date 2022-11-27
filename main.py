@@ -173,3 +173,4 @@ while True:
             handle_sorting("right", status_arm_r, to_be_sent_from_r, ready_to_be_sent_from_r, to_final_dest_r)
         if status_arm_l is in ["pre_sort", "idle", "waiting_for_vonveyor"]:
             handle_sorting("left", status_arm_l, to_be_sent_from_l, ready_to_be_sent_from_l, to_final_dest_l)
+            
