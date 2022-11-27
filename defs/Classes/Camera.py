@@ -46,7 +46,7 @@ class Camera:
     def checkForBlock(self):
         '''Check for block'''
         camera = self
-        res = camera.getRes(camera.ip)
+        res = camera.getRes()
         x, y = camera.processRes(res)
         return x, y
 
@@ -56,4 +56,6 @@ class Camera:
 #camera ip adresses
 cameraLeft = Camera("10.1.1.8", "left")
 cameraRight = Camera("10.1.1.7", "right")
+resultCameraLeft = cameraLeft.checkForBlock()
+resultCameraRight = cameraRight.checkForBlock()
 
