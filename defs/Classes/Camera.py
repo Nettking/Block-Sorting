@@ -1,8 +1,8 @@
 import time
-import urllib
+import urllib.request
 
 class Camera:
-    def __init__(self, ip, side,):
+    def __init__(self, ip, side):
         self.ip = ip
         self.side = side    
         
@@ -47,6 +47,7 @@ class Camera:
         '''Check for block'''
         camera = self
         res = camera.getRes()
+        print(res)
         x, y = camera.processRes(res)
         return x, y
 

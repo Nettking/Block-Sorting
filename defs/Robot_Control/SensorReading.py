@@ -29,7 +29,7 @@ def checkConveyorSensor(sensor):
     else:
         p = ("out of range")
     
-    print('Checking sensor #', sensor, ': ', p)
+    #print('Checking sensor #', sensor, ': ', p)
     if p < int(2):
         print("Object found")
     return p

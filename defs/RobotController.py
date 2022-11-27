@@ -93,10 +93,9 @@ def setPositionFromCameraInputLeft():
     return positionPickUp
 
 def sendLeftToRight(rob):
-    positionPickUp, positionPickUpDown = setPositionFromCameraInputLeft()
+    positionPickUp = setPositionFromCameraInputLeft()
     print("[MOVING ROBOT]")    
     move(rob, positionPickUp)
-    move(rob, positionPickUpDown)
     rob2.send_program(rq_close())
     time.sleep(3)
 
@@ -125,18 +124,12 @@ def sendRightToLeft():
     
 
 def pickupObjectLeftSide(rob):
-    print("[GETTING X,Y FROM LEFT CAMERA]")
-    x, y = cam.checkLeftCamera() 
-    time.sleep(2)
 
-
-    print(f"[X = {x}, Y = {y}]")
-    positionPickUp = (x,y,0.40,0,3.14,0)
-    positionPickUpDown = (x,y,0.15,0,3.14,0)
+    positionPickUp = setPositionFromCameraInputLeft()
+    print(positionPickUp)
     
     print("[MOVING ROBOT 2]")
     move(rob, positionPickUp)
-    move(rob, positionPickUpDown)
 
     rob.send_program(rq_close())
     time.sleep(3)
@@ -154,11 +147,13 @@ if __name__ =="__main__":
     #activateAndOpenGripper(rob)
     #activateAndOpenGripper(rob2)
     #x,y = getImputFromLeftCamera()
-    positionPickUp = 0.2,0.2,0.40,0,3.14,0
+    #positionPickUp = 0.2,0.2,0.40,0,3.14,0
     #position = setPositionFromCameraInputLeft()
-    #print(position)
-    #move(rob, positionPickUp)
-    #sendLeftToRight()
+    #    print(cam.resultCameraLeft)
+    #    move(rob, positionPickUp)
+    #sendLeftToRight(rob)
+    #froskPos = 0.2, 0.2, 0.2, 0, 3.14, 0
+    #move(rob, froskPos, True)
     #
     pickUpFromConveyor(rob2)
     '''
