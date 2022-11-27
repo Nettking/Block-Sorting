@@ -6,8 +6,7 @@ import Classes.Robot as Robot
 rob2 = Robot.robRight
 
 
-
-
+# Conveyor movement control
 
 def startConveyor():
     #start coveyor
@@ -43,9 +42,7 @@ def setConveyorSpeed(voltage):
     rob2.set_analog_out(1, voltage)
 
 
-
-
-
+# Check sensor readings on conveyor belt
         
 def checkSensorReadingsLeft():         
     # Get sensor data
@@ -72,5 +69,5 @@ def checkSensorReadingsRight():
         stopConveyor()
 
 
-checkSensorReadingsLeft()
-
+#checkSensorReadingsLeft()
+#checkSensorReadingsRight()
