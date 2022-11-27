@@ -1,4 +1,3 @@
-import urx
 from defs.Robot_Control.Gripper import *
 import time
 import urllib
