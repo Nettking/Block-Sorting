@@ -71,12 +71,15 @@ def pickUpFromConveyor(rob):
     move(rob, pos1)
 
     
-def sendLeftToRight(rob):
-    
+def getImputFromLeftCamera():
     print("[GETTING X,Y FROM LEFT CAMERA]")
     camera = cameraLeft
     x, y = camera.checkForBlock()
+    return x, y
 
+def sendLeftToRight(rob):
+    
+    x,y = getImputFromLeftCamera()
 
     print("[VALIDATING X AND Y]")
     if (x == None or y == None):
@@ -109,11 +112,7 @@ def sendLeftToRight(rob):
 
 def sendRightToLeft():
     sensorLeft = CC.checkSensorReadingsLeft()
-    if sensorLeft <= 30:
-        conveyor.setConveyorSpeed(0.012)
-        conveyor.reverseConveyor()
-        conveyor.time.sleep(20)
-        conveyor.stopConveyor()
+
     
 
 def pickupObjectLeftSide(rob):
