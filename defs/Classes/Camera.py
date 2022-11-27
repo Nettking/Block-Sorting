@@ -19,7 +19,8 @@ class Camera:
         time.sleep(2)
         return res
 
-    def processRes(res):
+    def processRes(self, res):
+        res = self.getRes()
         x_offset = float(25)
         y_offset = float(-385)
 
@@ -44,7 +45,8 @@ class Camera:
                 time.sleep(3)
                 return x, y
     
-    def checkForBlock(camera):
+    def checkForBlock(self):
+        camera = self
         res = camera.getRes(camera.ip)
         x, y = camera.processRes(res)
         return x, y

@@ -1,6 +1,4 @@
-import urx
 from Gripper import *
-#import urllib.request
 import time
 import ConveyorController as CC
 import defs.Classes.Camera as cam

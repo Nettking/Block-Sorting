@@ -1,7 +1,4 @@
 import time
-import requests
-import time
-import urx
 import defs.Classes.Robot as Robot
 
 #Access robot connected to conveyor
