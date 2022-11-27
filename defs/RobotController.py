@@ -1,9 +1,8 @@
-from Robot_Control.Gripper import *
 import time
+from Robot_Control.Gripper import *
 import ConveyorController as CC
-import defs.Classes.Camera as cam
-import defs.Classes.Robot as robot
-import Conveyor as conveyor
+import Classes.Camera as cam
+import Classes.Robot as robot
 
 
 sentBlocks = 0

@@ -1,5 +1,5 @@
-import Robot_Control.SensorReading as SR
 import time
+import Robot_Control.SensorReading as SR
 import Classes.Robot as Robot
 
 #Access robot connected to conveyor
