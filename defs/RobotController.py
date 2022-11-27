@@ -121,7 +121,7 @@ def sendRightToLeft():
 
 def pickupObjectLeftSide(rob):
     print("[GETTING X,Y FROM LEFT CAMERA]")
-    #x, y = cam.checkLeftCamera() 
+    x, y = cam.checkLeftCamera() 
     time.sleep(2)
 
 
@@ -146,11 +146,10 @@ if __name__ =="__main__":
     #r1="10.1.1.5"
     #rob = urx.Robot(r1, use_rt=True, urFirm=5.1)
 
-    #activateAndOpenGripper(rob)
+    activateAndOpenGripper(rob)
     activateAndOpenGripper(rob2)
 
-    #
-    sendLeftToRight()
+    #sendLeftToRight()
     #pickUpFromConveyor(rob2)
     '''
     for i in range(4):
