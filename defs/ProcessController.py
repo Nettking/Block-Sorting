@@ -68,7 +68,7 @@ def controlRightSide():
     if len(resultCameraRight)> 2: # Blokk funnet
         RC.sendLeftToRight()
         time.sleep(1)
-        controlLeftSide()
+        controlRightSide()
     elif len(resultCameraRight)< 2:
         time.sleep(1) ## Hvis ikke blokker funnet: Bytt kamera etter 1 sec
     return
