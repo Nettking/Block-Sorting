@@ -47,7 +47,6 @@ class Camera:
         '''Check for block'''
         camera = self
         res = camera.getRes()
-        print(res)
         x, y = camera.processRes(res)
         return x, y
 
