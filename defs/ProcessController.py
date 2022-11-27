@@ -9,36 +9,73 @@ def initialize():
     # Initialisere roboter:
     ## For begge robotarmene:
     ## Opprett tilkobling
-    robLeft = RC.rob
-    robRight = RC.rob2
-    
+
+    try:
+        robLeft = RC.rob
+    except:
+        print("Failed to initialize robot #1")
+
+    try:    
+        robRight = RC.rob2
+    except:
+        print("Failed to initialize robot #2")
+
     ## Aktiver og åpne kloer
-    RC.activateAndOpenGripper(robLeft)
-    RC.activateAndOpenGripper(robRight)
-
+    try:
+        RC.activateAndOpenGripper(robLeft)
+    except:
+        print("Failed to activate and open gripper #1")
+    
+    try:
+        RC.activateAndOpenGripper(robRight)
+    except:
+        print("Failed to activate and open gripper #2")
+    
     ## Sett TCP
-    robLeft.set_tcp(0,0,0.16,0,0,0)
-    time.sleep(0.3)
-    robLeft.set_tcp(0,0,0.16,0,0,0)
-    time.sleep(0.3)
-
+    try:
+        robLeft.set_tcp(0,0,0.16,0,0,0)
+        time.sleep(0.3)
+    except:
+        print("Failed to set TCP on robot #1")
+    
+    try:
+        robRight.set_tcp(0,0,0.16,0,0,0)
+        time.sleep(0.3)
+    except:
+        print("Failed to set TCP on robot #2")
+    
     ## Gå til hjemposisjon ( Denne må oppdateres )
     homePositionLeft = 0.03, 0.03, 0.3, 0, 3.14, 0
     homePositionRight = 0.03, 0.03, 0.3, 0, 3.14, 0
-    RC.move(robLeft, homePositionLeft)
-    time.sleep(5)
-    RC.move(robRight, homePositionRight)
-    time.sleep(5)
+    try:
+        RC.move(robLeft, homePositionLeft)
+        time.sleep(5)
+    except:
+        print("Failed to move robot to homePositionLeft")
+    
+    try:
+        RC.move(robRight, homePositionRight)
+        time.sleep(5)
+    except:
+        print("Failed to move robot to homePositionRight")
     
     # Opprett tilkobling til begge kameraene
-    cameraLeft = cam.cameraLeft
-    cameraRight = cam.cameraRight
+    try: 
+        cameraLeft = cam.cameraLeft
+    except:
+        print("Failed to initialize camera #1")
+    try:
+        cameraRight = cam.cameraRight
+    except:
+        print("Failed to initialize camera #2")
 
 
 def controlLeftSide():
     # Sjekk venstre side for blokker
-    resultCameraLeft = cam.resultCameraLeft 
-
+    try:
+        resultCameraLeft = cam.resultCameraLeft 
+    except:
+        print("Failed to get results from camera #1")
     ## Hvis Blokker funnet: Flytt blokk, sjekk kamera på nytt
     ### Finn posisjon blokk
     ### Gå til blokk
@@ -46,18 +83,23 @@ def controlLeftSide():
     ### Sett blokk på beltet
     ### Kjør blokk til andre siden  
     ### Plukk av blokk og plasser.
-    if len(resultCameraLeft)> 2: # Blokk funnet
-        RC.sendLeftToRight()
-        time.sleep(1)
-        controlLeftSide()
-    elif len(resultCameraLeft)< 2:
-        time.sleep(1) ## Hvis ikke blokker funnet: Bytt kamera etter 1 sec
-    return
+    try:
+        if len(resultCameraLeft)> 2: # Blokk funnet
+            RC.sendLeftToRight()
+            time.sleep(1)
+            controlLeftSide()
+        elif len(resultCameraLeft)< 2:
+            time.sleep(1) ## Hvis ikke blokker funnet: Bytt kamera etter 1 sec
+        return
+    except:
+        print("Failed to control left side")
 
 def controlRightSide():
     # Sjekk høyre side for blokker
-    resultCameraRight = cam.resultCameraRight 
-
+    try:
+        resultCameraRight = cam.resultCameraRight 
+    except:
+        print("Failed to get results from camera #2")
     ## Hvis Blokker funnet: Flytt blokk, sjekk kamera på nytt
     ### Finn posisjon blokk
     ### Gå til blokk
@@ -65,13 +107,17 @@ def controlRightSide():
     ### Sett blokk på beltet
     ### Kjør blokk til andre siden  
     ### Plukk av blokk og plasser.
-    if len(resultCameraRight)> 2: # Blokk funnet
-        RC.sendLeftToRight()
-        time.sleep(1)
-        controlRightSide()
-    elif len(resultCameraRight)< 2:
-        time.sleep(1) ## Hvis ikke blokker funnet: Bytt kamera etter 1 sec
-    return
+    try:
+        if len(resultCameraRight)> 2: # Blokk funnet
+            RC.sendLeftToRight()
+            time.sleep(1)
+            controlRightSide()
+        elif len(resultCameraRight)< 2:
+            time.sleep(1) ## Hvis ikke blokker funnet: Bytt kamera etter 1 sec
+        return
+    except:
+        print("Failed to control right side")
+
 
 def main():
  
@@ -81,6 +127,8 @@ def main():
     # Sjekk venstre side for blokker - flytt alle til høyre
     controlLeftSide()
 
+    ## Hvis ikke blokker funnet: Bytt kamera
+
     # Sjekk høyre side for blokker - - flytt alle til venstre
     controlRightSide()    
     
@@ -89,6 +137,7 @@ def main():
     # Vent 1 sekund
     time.sleep(1)
 
+
 # Starte opp roboter
 initialize()
 
@@ -96,4 +145,8 @@ initialize()
 count = 0
 while count < 100:
     count += 1
-    main()
+    try:
+        main()
+    except:
+        print("Exception has been thrown by main loop")
+        
