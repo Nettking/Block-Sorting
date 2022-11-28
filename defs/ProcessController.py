@@ -3,6 +3,11 @@ import Classes.Camera as cam
 import time
 import urx
 
+robLeft = None
+robRight = None
+isRobLeftInit = False
+isRobRightInit = False
+maxInitTries = 0
 
 def initialize():
     ################################################################
@@ -15,63 +20,74 @@ def initialize():
     r1="10.1.1.6"
     r2="10.1.1.5"
 
-    robLeft = urx.Robot(r1, use_rt=True, urFirm=5.1)
-    robRight = urx.Robot(r2, use_rt=True, urFirm=5.1)
-
-
     try:
+        global robLeft, isRobLeftInit
         robLeft = urx.Robot(r1, use_rt=True, urFirm=5.1)#RC.rob
         time.sleep(0.3)
+        isRobLeftInit = True
     except:
         print("Failed to initialize robot #1")
 
-    try:    
+    try:
+        global robRight, isRobRightInit    
         robRight = urx.Robot(r2, use_rt=True, urFirm=5.1)#RC.rob2
         time.sleep(0.3)
+        isRobRightInit = True
     except:
         print("Failed to initialize robot #2")
 
-    ## Aktiver og åpne kloer
-    try:
-        RC.activateAndOpenGripper(robLeft)
-        time.sleep(0.3)
-    except:
-        print("Failed to activate and open gripper #1")
-    
-    try:
-        RC.activateAndOpenGripper(robRight)
-        time.sleep(0.3)
-    except:
-        print("Failed to activate and open gripper #2")
-    
-    ## Sett TCP
-    try:
-        robLeft.set_tcp(0,0,0.16,0,0,0)
-        time.sleep(0.3)
-    except:
-        print("Failed to set TCP on robot #1")
-    
-    try:
-        robRight.set_tcp(0,0,0.16,0,0,0)
-        time.sleep(0.3)
-    except:
-        print("Failed to set TCP on robot #2")
-    
-    ## Gå til hjemposisjon ( Denne må oppdateres )
-    homePositionLeft = 0.25, -0.22, 0.20, 0, 3.14, 0
-    homePositionRight = 0.25, -0.22, 0.20, 0, 3.14, 0
-    try:
-        RC.move(robLeft, homePositionLeft)
-        time.sleep(5)
-    except:
-        print("Failed to move robot to homePositionLeft")
-    
-    try:
-        RC.move(robRight, homePositionRight)
-        time.sleep(5)
-    except:
-        print("Failed to move robot to homePositionRight")
-    
+    if isRobRightInit and isRobLeftInit:
+        ## Aktiver og åpne kloer
+        try:
+            RC.activateAndOpenGripper(robLeft)
+            time.sleep(0.3)
+        except:
+            print("Failed to activate and open gripper #1")
+        
+        try:
+            RC.activateAndOpenGripper(robRight)
+            time.sleep(0.3)
+        except:
+            print("Failed to activate and open gripper #2")
+        
+        ## Sett TCP
+        try:
+            robLeft.set_tcp(0,0,0.16,0,0,0)
+            time.sleep(0.3)
+        except:
+            print("Failed to set TCP on robot #1")
+        
+        try:
+            robRight.set_tcp(0,0,0.16,0,0,0)
+            time.sleep(0.3)
+        except:
+            print("Failed to set TCP on robot #2")
+        
+        ## Gå til hjemposisjon ( Denne må oppdateres )
+        homePositionLeft = 0.25, -0.22, 0.20, 0, 3.14, 0
+        homePositionRight = 0.25, -0.22, 0.20, 0, 3.14, 0
+        try:
+            RC.move(robLeft, homePositionLeft)
+            time.sleep(5)
+        except:
+            print("Failed to move robot to homePositionLeft")
+        
+        try:
+            RC.move(robRight, homePositionRight)
+            time.sleep(5)
+        except:
+            print("Failed to move robot to homePositionRight")
+    else:
+        global maxInitTries
+        try:
+            if maxInitTries < 3:
+                maxInitTries += 1
+                initialize()
+            else:
+                raise Exception
+        except:
+            print("Init failed")
+
     # Opprett tilkobling til begge kameraene
     try: 
         cameraLeft = cam.cameraLeft
