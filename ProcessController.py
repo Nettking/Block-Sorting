@@ -17,6 +17,7 @@ def initialize(rob: Robot, rob2: Robot):
         return True
     except:
         return False
+    
 def send(robotSend: Robot, robotPickup: Robot, belt: ConveyorBelt):
     robotSend.pickupFromWorkspace()
     robotSend.placeOnConveyor()
