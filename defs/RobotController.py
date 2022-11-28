@@ -5,9 +5,11 @@ import Classes.Camera as cam
 import Classes.Robot as robot
 
 
-sentBlocks = 0
+sentBlocksL2R = 0
+sentBlocksR2L = 0
 pos_multiplyer = 0.06
-block_y_pos = -0.22 - (sentBlocks*pos_multiplyer)
+block_y_posL2R = -0.22 - (sentBlocksL2R*pos_multiplyer)
+block_y_posR2L = -0.22 - (sentBlocksR2L*pos_multiplyer)
 
 cameraLeft = cam.Camera("10.1.1.8", "left")
 cameraRight = cam.Camera("10.1.1.7", "Right")
@@ -35,9 +37,15 @@ def activateAndOpenGripper(rob):
     rob.send_program(rq_open())
     time.sleep(2)
 
-def pickUpFromConveyor(rob):
-    global block_y_pos
-
+def pickUpFromConveyor(rob, from_side):
+    global block_y_pos, sentBlocksL2R, sentBlocksR2L
+    if from_side == "left":
+        sentBlocksL2R += 1
+        block_y_pos = block_y_posL2R
+    if from_side == "right":
+        sentBlocksR2L += 1
+        block_y_pos = block_y_posR2L
+    
     #positions x, y, z, rx, ry, rz
     startPosition = 0.25, -0.22, 0.20, 0, 3.14, 0
     pos2 = 0.20, 0.10, 0.30, 0, 3.14, 0
@@ -60,7 +68,7 @@ def pickUpFromConveyor(rob):
     move(rob, pos4)
     move(rob, pos3)
     move(rob, pos2)
-    move(rob, pos1)
+    move(rob, startPosition)
     move(rob, pos6)
     move(rob, pos7)
 
@@ -68,7 +76,7 @@ def pickUpFromConveyor(rob):
     time.sleep(2)
 
     move(rob, pos6)
-    move(rob, pos1)
+    move(rob, startPosition)
 
     
 def getImputFromLeftCamera():
@@ -76,14 +84,6 @@ def getImputFromLeftCamera():
     x,y = cam.resultCameraLeft
     return x,y
     
-    '''
-    x, y = camera.checkForBlock()
-    print("[VALIDATING X AND Y]")
-    if (x == None or y == None):
-        x, y = camera.checkForBlock()
-    return x, y
-'''
-
 
 def setPositionFromCameraInputLeft():
     x,y = getImputFromLeftCamera()
@@ -93,37 +93,88 @@ def setPositionFromCameraInputLeft():
     #positionPickUpDown = (x,y,0.15,0,3.14,0)
     return positionPickUp
 
-def sendLeftToRight(rob):
-    positionPickUp = setPositionFromCameraInputLeft()
+
+def getImputFromRightCamera():
+    print("[GETTING X,Y FROM Right CAMERA]")
+    x,y = cam.resultCameraRight
+    return x,y
     
-    print("[MOVING ROBOT]")    
-    move(rob, positionPickUp)
-    rob2.send_program(rq_close())
-    time.sleep(3)
 
 
-'''
-    print("[FINISHED MOVING ROBOT 2]")
-    time.sleep(3)
-    sensorvalue = 0
-    CC.checkSensorReadingsLeft()
-    time.sleep(2)
-    print("DONE CHECKING SENSORS")
-    if sensorValue != 0 or sensorValue != None:
-        print("INSIDE IF")
-        pickUpFromConveyor(rob)
-        global sentBlocks, block_y_pos 
-        sentBlocks += 1
-        block_y_pos = -0.22 - (sentBlocks*pos_multiplyer)
+def setPositionFromCameraInputRight():
+    x,y = getImputFromRightCamera()
+    print(f"[POST VALIDATION X AND Y][X = {x}, Y = {y}]")
+    # Left side has reversed y-value 
+    positionPickUp = (x,y,0.20,0.05,3.14,0)
+    #positionPickUpDown = (x,y,0.15,0,3.14,0)
+    return positionPickUp
 
-    print("DONE WITH sendLeftToRight")
-'''
 
-def sendRightToLeft():
-    #sensorLeft = CC.checkSensorReadingsLeft()
-    return
 
-    
+
+
+
+
+
+
+
+
+def placeObjectLeftOnConveyor(rob):
+    homePosition = 0.25, -0.22, 0.20, 0, 3.14, 0
+    pos2 = 0.15, -0.10, 0.20, 0, 3.14, 0
+    pos3 = 0.08, 0.10, 0.20, 0, 3.14, 0
+    pos4 = 0.03, 0.30, 0.20, 0, 3.14, 0
+    pos5 = 0.03, 0.30, 0.15, 0, 3.14, 0
+    # Go to home position
+    move(rob, homePosition)
+    # Move from home position towards conveyor belt
+    move(rob, pos2)
+    # Even closer to the conveyor belt
+    move(rob, pos3)
+    # Straight over drop location on conveyor belt
+    move(rob, pos4)
+    # Final drop on conveyor
+    move(rob, pos5)
+    # Open to drop block
+    rob.send_program(rq_open())
+    # Move away from block
+    move(rob, pos4)
+    # Move from the conveyor belt towards home position
+    move(rob, pos3)
+    # Even closer to home position
+    move(rob, pos2)
+    # Back at home position
+    move(rob, homePosition)
+    time.sleep(0.5)
+
+def placeObjectRightOnConveyor(rob):
+    homePosition = 0.25, -0.22, 0.20, 0, 3.14, 0
+    pos2 = 0.15, -0.10, 0.20, 0, 3.14, 0
+    pos3 = 0.08, 0.10, 0.20, 0, 3.14, 0
+    pos4 = 0.03, 0.30, 0.20, 0, 3.14, 0
+    pos5 = 0.03, 0.30, 0.15, 0, 3.14, 0
+    # Go to home position
+    move(rob, homePosition)
+    # Move from home position towards conveyor belt
+    move(rob, pos2)
+    # Even closer to the conveyor belt
+    move(rob, pos3)
+    # Straight over drop location on conveyor belt
+    move(rob, pos4)
+    # Final drop on conveyor
+    move(rob, pos5)
+    # Open to drop block
+    rob.send_program(rq_open())
+    # Move away from block
+    move(rob, pos4)
+    # Move from the conveyor belt towards home position
+    move(rob, pos3)
+    # Even closer to home position
+    move(rob, pos2)
+    # Back at home position
+    move(rob, homePosition)
+    time.sleep(0.5)
+
 
 def pickupObjectLeftSide(rob):
 
@@ -139,6 +190,47 @@ def pickupObjectLeftSide(rob):
 
     print("[FINISHED MOVING ROBOT 2]")
     time.sleep(3)
+
+def pickupObjectRightSide(rob):
+
+    positionPickUp = setPositionFromCameraInputRight()
+
+    print(positionPickUp)
+    
+    print("[MOVING ROBOT 2]")
+    move(rob, positionPickUp)
+
+    rob.send_program(rq_close())
+    time.sleep(3)
+
+    print("[FINISHED MOVING ROBOT 2]")
+    time.sleep(3)
+
+
+def sendLeftToRight():
+    # Find block
+    pickupObjectLeftSide(rob)
+    # Place on conveyor
+    placeObjectLeftOnConveyor(rob)
+    # Send block if on conveyor
+    CC.checkSensorReadingsLeft()
+    # Place block on home area
+    pickUpFromConveyor(rob2, "left")
+    
+
+
+def sendRightToLeft():
+    # Find block
+    pickupObjectRightSide(rob2)
+    # Place on conveyor
+    placeObjectRightOnConveyor(rob2)
+    # Send block if on conveyor
+    CC.checkSensorReadingsRight()
+    # Place block on home area
+    pickUpFromConveyor(rob, "right")
+
+    
+
 
 
 
