@@ -1,9 +1,9 @@
 import time
 import SensorReading as SR
 import Classes.Robot as Robot
-
+import ProcessController as PC
 #Access robot connected to conveyor
-rob2 = Robot.robRight
+rob2 = PC.robRight
 
 
 # Conveyor movement control
