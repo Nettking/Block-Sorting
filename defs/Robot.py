@@ -5,8 +5,8 @@ from enum import Enum
 
 
 class ROBOT_SIDE(Enum):
-    LEFT = 1
-    RIGHT = 2
+    LEFT = 4
+    RIGHT = 1
 
 
 class Robot:
@@ -123,8 +123,6 @@ class Robot:
         # Back at home position
         self.move(location = self.homePosition)
         time.sleep(0.5)
-        
-
     
     def close(self):
         self.robot.close()

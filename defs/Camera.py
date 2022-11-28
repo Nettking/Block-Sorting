@@ -37,6 +37,13 @@ class Camera:
                 y = (float(y) - y_offset) /1000
                 time.sleep(3)
                 return x, y
+            
+    def setPositionFromCameraInputLeft(self):
+        x,y = self.processRes()
+        # Left side has reversed y-value 
+        positionPickUp = (x,-y,0.05,0.05,3.14,0)
+        #positionPickUpDown = (x,y,0.15,0,3.14,0)
+        return positionPickUp
     
     def checkForBlock(self):
         '''Check for block'''
