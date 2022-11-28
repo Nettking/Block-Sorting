@@ -79,8 +79,8 @@ def main(resultCameraLeft, resultCameraRight, robotLeft, robotRight, belt):
 if __name__ == "__main__":
     maxInitTries = 0
 
-    cameraLeft = Camera("10.1.1.8", "left")
-    cameraRight = Camera("10.1.1.7", "right")
+    cameraLeft = Camera("10.1.1.8")
+    cameraRight = Camera("10.1.1.7")
 
 
     r_ip="10.1.1.6"
