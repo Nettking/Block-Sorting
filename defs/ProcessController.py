@@ -4,16 +4,20 @@ from Camera import Camera
 from ConveyorBelt import ConveyorBelt
 
 def initialize(rob: Robot, rob2: Robot):
-    rob.initRobot()
-    rob.setTCP()
-    rob.activateAndOpenGripper()
-    rob.home()
-    time.sleep(2)
-    rob2.initRobot()
-    rob2.setTCP()
-    rob2.activateAndOpenGripper()
-    rob2.home()
-
+    try:
+        rob.initRobot()
+        rob.setTCP()
+        rob.activateAndOpenGripper()
+        rob.home()
+        time.sleep(2)
+        rob2.initRobot()
+        rob2.setTCP()
+        rob2.activateAndOpenGripper()
+        rob2.home()
+        return True
+    except:
+        return False
+    
 def send(robotSend: Robot, robotPickup: Robot, belt: ConveyorBelt):
     robotSend.pickupFromWorkspace()
     robotSend.placeOnConveyor()
@@ -74,7 +78,7 @@ def main(resultCameraLeft, resultCameraRight, robotLeft, robotRight, belt):
 
 if __name__ == "__main__":
     maxInitTries = 0
-    
+
     cameraLeft = Camera("10.1.1.8", "left")
     cameraRight = Camera("10.1.1.7", "right")
     belt = ConveyorBelt()
@@ -85,8 +89,12 @@ if __name__ == "__main__":
     robotLeft = Robot(l_ip)
     robotRight = Robot(r_ip)
 
+    isInitialized = False
     # Starte opp roboter
+
     isInitialized = initialize()
+
+        
 
     if isInitialized:
         # Sjekk 100 ganger for blokker
