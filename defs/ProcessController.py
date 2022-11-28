@@ -97,23 +97,16 @@ def initCameras():
 
 def setTCPLeft():
     ## Sett TCP
-    try:
-        robLeft.set_tcp(0,0,0.16,0,0,0)
-        time.sleep(0.3)
-        return True
-    except:
-        print("Failed to set TCP on robot #1")
-        return False
+    robLeft.set_tcp((0,0,0.16,0,0,0))
+    time.sleep(0.3)
+    return True
     
 
 def setTCPRight():
-    try:
-        robRight.set_tcp(0,0,0.16,0,0,0)
-        time.sleep(0.3)
-        return True
-    except:
-        print("Failed to set TCP on robot #2")
-        return False
+    robRight.set_tcp((0,0,0.16,0,0,0))
+    time.sleep(0.3)
+    return True
+
 
 def homeRobotLeft():
     ## Gå til hjemposisjon ( Denne må oppdateres )

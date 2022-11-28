@@ -2,7 +2,7 @@ import time
 from Gripper import *
 import ConveyorController as CC
 import Classes.Camera as cam
-import Classes.Robot as robot
+import ProcessController as PC
 
 
 sentBlocksL2R = 0
@@ -13,8 +13,8 @@ block_y_posR2L = -0.22 - (sentBlocksR2L*pos_multiplyer)
 
 cameraLeft = cam.Camera("10.1.1.8", "left")
 cameraRight = cam.Camera("10.1.1.7", "Right")
-rob = robot.robLeft
-rob2 = robot.robRight
+rob = PC.robLeft
+rob2 = PC.robRight
 
 def move(robot, location, moveWait=True):
     #moves robot
@@ -260,13 +260,13 @@ if __name__ =="__main__":
     #rob.close()
         ## Sett TCP
     try:
-        robLeft.set_tcp(0,0,0.16,0,0,0)
+        rob.set_tcp((0,0,0.16,0,0,0))
         time.sleep(0.3)
     except:
         print("Failed to set TCP on robot #1")
     
     try:
-        robRight.set_tcp(0,0,0.16,0,0,0)
+        rob2.set_tcp((0,0,0.16,0,0,0))
         time.sleep(0.3)
     except:
         print("Failed to set TCP on robot #2")
