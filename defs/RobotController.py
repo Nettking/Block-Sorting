@@ -18,7 +18,7 @@ rob2 = robot.robRight
 
 def move(robot, location, moveWait=True):
     #moves robot
-    robot.movex("movej", location,wait=moveWait, acc=0.5, vel=0.8, relative=False, threshold=None)
+    robot.movex("movel", location,wait=moveWait, acc=0.5, vel=0.8, relative=False, threshold=None)
     if moveWait == False:
         time.sleep(0.1)
 
@@ -89,7 +89,7 @@ def setPositionFromCameraInputLeft():
     x,y = getImputFromLeftCamera()
     print(f"[POST VALIDATION X AND Y][X = {x}, Y = {y}]")
     # Left side has reversed y-value 
-    positionPickUp = (x,-y,0.20,0.05,3.14,0)
+    positionPickUp = (x,-y,0.05,0.05,3.14,0)
     #positionPickUpDown = (x,y,0.15,0,3.14,0)
     return positionPickUp
 
@@ -122,9 +122,9 @@ def setPositionFromCameraInputRight():
 def placeObjectLeftOnConveyor(rob):
     homePosition = 0.25, -0.22, 0.20, 0, 3.14, 0
     pos2 = 0.15, -0.10, 0.20, 0, 3.14, 0
-    pos3 = 0.08, 0.10, 0.20, 0, 3.14, 0
-    pos4 = 0.03, 0.30, 0.20, 0, 3.14, 0
-    pos5 = 0.03, 0.30, 0.15, 0, 3.14, 0
+    pos3 = 0.15, 0.10, 0.20, 0, 3.14, 0
+    pos4 = 0.15, 0.30, 0.20, 0, 3.14, 0
+    pos5 = 0.03, 0.30, 0.05, 0, 3.14, 0
     # Go to home position
     move(rob, homePosition)
     # Move from home position towards conveyor belt
@@ -258,9 +258,21 @@ if __name__ =="__main__":
     '''
     #sendLeftToRight(rob, rob2)
     #rob.close()
-
+        ## Sett TCP
+    try:
+        robLeft.set_tcp(0,0,0.16,0,0,0)
+        time.sleep(0.3)
+    except:
+        print("Failed to set TCP on robot #1")
+    
+    try:
+        robRight.set_tcp(0,0,0.16,0,0,0)
+        time.sleep(0.3)
+    except:
+        print("Failed to set TCP on robot #2")
+    
     #pickupObjectLeftSide(rob2)
-    sendLeftToRight(rob)
+    sendLeftToRight()
     #pickUpFromConveyor(rob)
 
     rob2.close()

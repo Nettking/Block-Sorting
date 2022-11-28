@@ -1,6 +1,8 @@
 import RobotController as RC
 import Classes.Camera as cam
 import time
+import urx
+
 
 def initialize():
     ################################################################
@@ -9,15 +11,22 @@ def initialize():
     # Initialisere roboter:
     ## For begge robotarmene:
     ## Opprett tilkobling
+    #set robot ip adresses
+    r1="10.1.1.6"
+    r2="10.1.1.5"
+
+    robLeft = urx.Robot(r1, use_rt=True, urFirm=5.1)
+    robRight = urx.Robot(r2, use_rt=True, urFirm=5.1)
+
 
     try:
-        robLeft = RC.rob
+        robLeft = urx.Robot(r1, use_rt=True, urFirm=5.1)#RC.rob
         time.sleep(0.3)
     except:
         print("Failed to initialize robot #1")
 
     try:    
-        robRight = RC.rob2
+        robRight = urx.Robot(r2, use_rt=True, urFirm=5.1)#RC.rob2
         time.sleep(0.3)
     except:
         print("Failed to initialize robot #2")
@@ -91,7 +100,7 @@ def controlLeftSide():
         if len(resultCameraLeft)> 2: # Blokk funnet
             RC.sendLeftToRight()
             time.sleep(1)
-            controlLeftSide()
+            #controlLeftSide()
         elif len(resultCameraLeft)< 2:
             time.sleep(1) ## Hvis ikke blokker funnet: Bytt kamera etter 1 sec
         return
@@ -115,7 +124,7 @@ def controlRightSide():
         if len(resultCameraRight)> 2: # Blokk funnet
             RC.sendLeftToRight()
             time.sleep(1)
-            controlRightSide()
+            #controlRightSide()
         elif len(resultCameraRight)< 2:
             time.sleep(1) ## Hvis ikke blokker funnet: Bytt kamera etter 1 sec
         return
