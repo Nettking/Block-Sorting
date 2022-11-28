@@ -4,8 +4,8 @@ import time
 class ConveyorBelt():
 
     def __init__(self, robot):
-        self.SENSOR_LEFT = 4
-        self.SENSOR_RIGHT = 1
+        self.SENSOR_LEFT = 1
+        self.SENSOR_RIGHT = 2
         self.robot = robot
 
     # Conveyor movement control
@@ -59,10 +59,6 @@ class ConveyorBelt():
     def checkConveyorSensor(self, sensor):
         if sensor == self.SENSOR_LEFT: 
             r = requests.post('http://10.1.1.9', json={"code":"request","cid":1,"adr":"/getdatamulti","data":{"datatosend":["/iolinkmaster/port[4]/iolinkdevice/pdin"]}})
-        if sensor == self.SENSOR_MIDDLE_LEFT: 
-            r = requests.post('http://10.1.1.9', json={"code":"request","cid":1,"adr":"/getdatamulti","data":{"datatosend":["/iolinkmaster/port[3]/iolinkdevice/pdin"]}})
-        if sensor == self.SENSOR_MIDDLE_RIGHT: 
-            r = requests.post('http://10.1.1.9', json={"code":"request","cid":1,"adr":"/getdatamulti","data":{"datatosend":["/iolinkmaster/port[2]/iolinkdevice/pdin"]}})
         if sensor == self.SENSOR_RIGHT: 
             r = requests.post('http://10.1.1.9', json={"code":"request","cid":1,"adr":"/getdatamulti","data":{"datatosend":["/iolinkmaster/port[1]/iolinkdevice/pdin"]}})
         time.sleep(0.1)

@@ -5,8 +5,8 @@ from enum import Enum
 
 
 class ROBOT_SIDE(Enum):
-    LEFT = 4
-    RIGHT = 1
+    LEFT = 1
+    RIGHT = 2
 
 
 class Robot:

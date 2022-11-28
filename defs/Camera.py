@@ -38,24 +38,14 @@ class Camera:
                 time.sleep(3)
                 return x, y
             
-    def setPositionFromCameraInputLeft(self):
+    def setPositionFromCameraInput(self):
         x,y = self.processRes()
         # Left side has reversed y-value 
         positionPickUp = (x,-y,0.05,0.05,3.14,0)
-        #positionPickUpDown = (x,y,0.15,0,3.14,0)
         return positionPickUp
     
     def checkForBlock(self):
         '''Check for block'''
         x, y = self.processRes()
         return x, y
-
-
-
-
-#camera ip adresses
-#cameraLeft = Camera("10.1.1.8", "left")
-#cameraRight = Camera("10.1.1.7", "right")
-#resultCameraLeft = cameraLeft.processRes()
-#resultCameraRight = cameraRight.processRes()
 

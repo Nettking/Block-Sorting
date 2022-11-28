@@ -95,8 +95,8 @@ if __name__ == "__main__":
         while count < 100:
             count += 1
             try:
-                resultCameraLeft = cameraLeft.processRes()
-                resultCameraRight = cameraRight.processRes()
+                resultCameraLeft = cameraLeft.setPositionFromCameraInput()
+                resultCameraRight = cameraRight.setPositionFromCameraInput()
                 main(resultCameraLeft, resultCameraRight, belt)
             except:
                 print("Exception has been thrown by main loop")
