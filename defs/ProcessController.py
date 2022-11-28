@@ -79,14 +79,12 @@ def initialize():
             print("Failed to move robot to homePositionRight")
     else:
         global maxInitTries
-        try:
-            if maxInitTries < 3:
-                maxInitTries += 1
-                initialize()
-            else:
-                raise Exception
-        except:
-            print("Init failed")
+        if maxInitTries < 3:
+            maxInitTries += 1
+            initialize()
+        else:
+            return False
+
 
     # Opprett tilkobling til begge kameraene
     try: 
@@ -97,6 +95,8 @@ def initialize():
         cameraRight = cam.cameraRight
     except:
         print("Failed to initialize camera #2")
+    
+    return True
 
 
 def controlLeftSide():
@@ -167,15 +167,19 @@ def main():
     time.sleep(1)
 
 
-# Starte opp roboter
-initialize()
+if __name__ == "__main__":
+    # Starte opp roboter
+    isInitialized = initialize()
 
-# Sjekk 100 ganger for blokker
-count = 0
-while count < 100:
-    count += 1
-    try:
-        main()
-    except:
-        print("Exception has been thrown by main loop")
-        
+    if isInitialized:
+        # Sjekk 100 ganger for blokker
+        count = 0
+        while count < 100:
+            count += 1
+            try:
+                main()
+            except:
+                print("Exception has been thrown by main loop")
+    else:
+        print("Failed to initialize")
+        print("Closing down")
