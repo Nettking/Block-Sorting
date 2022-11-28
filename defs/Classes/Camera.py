@@ -17,10 +17,10 @@ class Camera:
         time.sleep(2)
         return res
 
-    def processRes(self, res):
+    def processRes(self):
         res = self.getRes()
         x_offset = float(25)
-        y_offset = float(-385)
+        y_offset = float(-485)
 
         #reads output from camera
         coords = res.read().decode('utf-8')
@@ -46,8 +46,7 @@ class Camera:
     def checkForBlock(self):
         '''Check for block'''
         camera = self
-        res = camera.getRes()
-        x, y = camera.processRes(res)
+        x, y = camera.processRes()
         return x, y
 
 
@@ -56,6 +55,6 @@ class Camera:
 #camera ip adresses
 cameraLeft = Camera("10.1.1.8", "left")
 cameraRight = Camera("10.1.1.7", "right")
-resultCameraLeft = cameraLeft.checkForBlock()
-resultCameraRight = cameraRight.checkForBlock()
+resultCameraLeft = cameraLeft.processRes()
+resultCameraRight = cameraRight.processRes()
 

@@ -49,8 +49,8 @@ def initialize():
         print("Failed to set TCP on robot #2")
     
     ## Gå til hjemposisjon ( Denne må oppdateres )
-    homePositionLeft = 0.03, 0.03, 0.3, 0, 3.14, 0
-    homePositionRight = 0.03, 0.03, 0.3, 0, 3.14, 0
+    homePositionLeft = 0.25, -0.22, 0.20, 0, 3.14, 0
+    homePositionRight = 0.25, -0.22, 0.20, 0, 3.14, 0
     try:
         RC.move(robLeft, homePositionLeft)
         time.sleep(5)
