@@ -55,6 +55,7 @@ class Camera:
         global whichObject
         camera = self
         ip = camera.ip
+        
         if whichObject == 0:
             whichObject += 1
             page = urllib.request.urlopen('http://'+ ip +'/CmdChannel?sINT_1_1')
