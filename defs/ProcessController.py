@@ -82,18 +82,13 @@ if __name__ == "__main__":
     cameraLeft = Camera("10.1.1.8")
     cameraRight = Camera("10.1.1.7")
 
+    robotLeft = Robot("10.1.1.5")
+    robotRight = Robot("10.1.1.6")
 
-    r_ip="10.1.1.6"
-    l_ip="10.1.1.5"
-
-    robotLeft = Robot(l_ip)
-    robotRight = Robot(r_ip)
     belt = ConveyorBelt(robotRight)
+
     isInitialized = False
-    # Starte opp roboter
-
     isInitialized = initialize()
-
     if isInitialized:
         # Sjekk 100 ganger for blokker
         count = 0
