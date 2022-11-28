@@ -45,14 +45,19 @@ def initialize():
 def initCameraLeft():
     try: 
         cameraLeft = cam.cameraLeft
+        return True
     except:
         print("Failed to initialize camera #1")
+        return False
 
 def initCameraRight():
     try:
         cameraRight = cam.cameraRight
+        return True
     except:
         print("Failed to initialize camera #2")
+        return False
+
 def initRobotLeft(rob_ip):
     try:
         global robLeft, isRobLeftInit
