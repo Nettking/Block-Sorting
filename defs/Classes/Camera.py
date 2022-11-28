@@ -1,6 +1,8 @@
 import time
 import urllib.request
 
+whichObject = 0
+
 class Camera:
     def __init__(self, ip, side):
         self.ip = ip
@@ -48,6 +50,23 @@ class Camera:
         camera = self
         x, y = camera.processRes()
         return x, y
+
+    def switchObjectType(self):
+        global whichObject
+        camera = self
+        ip = camera.ip
+        if whichObject == 0:
+            whichObject += 1
+            page = urllib.request.urlopen('http://'+ ip +'/CmdChannel?sINT_1_1')
+            time.sleep(3)
+        
+        if whichObject == 1:
+            whichObject -= 1
+            page = urllib.request.urlopen('http://'+ ip +'/CmdChannel?sINT_1_0')
+            time.sleep(3)
+            
+        
+        print("object switched")
 
 
 
