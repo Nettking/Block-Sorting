@@ -60,16 +60,19 @@ if __name__ == "__main__":
     time.sleep(3)
     print("ACTIVATING GRIPPER")
     robotRight.activateAndOpenGripper()
-    print("OPEN GRIPPER")
-    robotRight.openGripper()
-    time.sleep(2)
+
     print("CLOSE GRIPPER")
     robotRight.closeGripper()
     time.sleep(2)
+    print("OPEN GRIPPER")
+    robotRight.openGripper()
+    time.sleep(2)
     print("HOME")
-    robotRight.home()
-    centerViaPointBeforeHomePos = 0,-0.3,0.2,0,3.14,0 
+    centerViaPointBeforeHomePos = 0,-0.3,0.2,0,3.14,0
     robotRight.move(centerViaPointBeforeHomePos)
+    robotRight.home()
+     
+    
 
     print("INIT ROBOT LEF")
     robotLeft.initRobot()
@@ -81,9 +84,10 @@ if __name__ == "__main__":
     robotLeft.closeGripper()
     robotLeft.openGripper()
     time.sleep(2)
-    robotLeft.home()
     robotLeft.move(centerViaPointBeforeHomePos)
-    robotLeft.close()
+    robotLeft.home()
+    
+    robotRight.close()
     robotLeft.close()
 
 
