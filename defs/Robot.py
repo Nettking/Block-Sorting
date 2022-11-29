@@ -80,7 +80,7 @@ if __name__ == "__main__":
     time.sleep(2)
     robotLeft.home()
 
-    robotLeft.close()
+    robotRight.close()
     robotLeft.close()
 
 
