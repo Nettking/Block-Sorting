@@ -71,10 +71,9 @@ class Camera:
 
 
 
-
-#camera ip adresses
-cameraLeft = Camera("10.1.1.8", "left")
-cameraRight = Camera("10.1.1.7", "right")
-resultCameraLeft = cameraLeft.processRes()
-resultCameraRight = cameraRight.processRes()
-
+if __name__ == "__main__":
+    #camera ip adresses
+    cameraLeft = Camera("10.1.1.8", "left")
+    cameraRight = Camera("10.1.1.7", "right")
+    resultCameraLeft = cameraLeft.processRes()
+    resultCameraRight = cameraRight.processRes()
