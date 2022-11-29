@@ -68,19 +68,22 @@ if __name__ == "__main__":
     time.sleep(2)
     print("HOME")
     robotRight.home()
+    centerViaPointBeforeHomePos = 0,-0.3,0.2,0,3.14,0 
+    robotRight.move(centerViaPointBeforeHomePos)
 
     print("INIT ROBOT LEF")
     robotLeft.initRobot()
     robotLeft.setTCP( (0,0,0.16,0,0,0) )
     time.sleep(3)
     robotLeft.activateAndOpenGripper()
-    robotLeft.openGripper()
+
     time.sleep(2)
     robotLeft.closeGripper()
+    robotLeft.openGripper()
     time.sleep(2)
     robotLeft.home()
-
-    robotRight.close()
+    robotLeft.move(centerViaPointBeforeHomePos)
+    robotLeft.close()
     robotLeft.close()
 
 
