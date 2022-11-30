@@ -68,5 +68,6 @@ def checkSensorReadingsRight():
         stopConveyor()
 
 
-#checkSensorReadingsLeft()
+#
+# checkSensorReadingsLeft()
 #checkSensorReadingsRight()

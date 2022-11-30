@@ -1,6 +1,6 @@
 import time
 import requests
-import time
+
 
 #Set sensor port numbers with names that makes sense
 sensorLeft = 4
