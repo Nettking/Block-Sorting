@@ -1,12 +1,23 @@
 import urx
 import time
 from Gripper import *
+from enum import Enum
+
+
+class ROBOT_SIDE(Enum):
+    LEFT = 1
+    RIGHT = 2
+
 
 class Robot:
-    def __init__(self, ip, homePos):
+    def __init__(self, ip, side: ROBOT_SIDE):
         self.ip = ip
+        self.side = side
         self.robot = None 
-        self.homePosition = homePos
+        self.homePosition = (0.25, -0.22, 0.20, 0, 3.14, 0)
+        self.sentBlocks = 0
+        self.pos_multiplyer = 0.06
+        self.block_y_pos = -0.22 - (self.sentBlocks * self.pos_multiplyer)
     
     def initRobot(self):
         self.robot = urx.Robot(self.ip, use_rt=True, urFirm=5.1)
@@ -44,14 +55,83 @@ class Robot:
         self.robot.send_program(rq_close())
         time.sleep(3)
     
+    def pickUpFromConveyor(self):
+        self.sentBlocks += 1
+
+        #positions x, y, z, rx, ry, rz
+        startPosition = 0.25, -0.22, 0.20, 0, 3.14, 0
+        pos2 = 0.20, 0.10, 0.30, 0, 3.14, 0
+        pos3 = 0.03, 0.30, 0.30, 0, 3.14, 0
+        pos4 = 0.03, 0.30, 0.25, 0, 3.14, 0
+        pos5 = 0.03, 0.30, 0.15, 0, 3.14, 0
+        pos6 = 0.25, self.block_y_pos, 0.30, 0, 3.14, 0
+        pos7 = 0.25, self.block_y_pos, 0.20, 0, 3.14, 0
+
+        self.openGripper()
+
+        self.move(location = startPosition)
+        self.move(location = pos2)
+        self.move(location = pos3)
+        self.move(location = pos4)
+        self.move(location = pos5)
+
+        self.closeGripper()
+
+        self.move(location = pos4)
+        self.move(location = pos3)
+        self.move(location = pos2)
+        self.move(location = startPosition)
+        self.move(location = pos6)
+        self.move(location = pos7)
+
+        self.openGripper()
+        time.sleep(2)
+
+        self.move(location = pos6)
+        self.move(location = startPosition)
+
+    def pickUpFromWorkingSpace(self, positionPickup):
+        self.move(location = positionPickup)
+        self.closeGripper()
+    
+    def placeOnConveyor(self):
+        homePosition = 0.25, -0.22, 0.20, 0, 3.14, 0
+        pos2 = 0.15, -0.10, 0.20, 0, 3.14, 0
+        pos3 = 0.15, 0.10, 0.20, 0, 3.14, 0
+        pos4 = 0.15, 0.30, 0.20, 0, 3.14, 0
+        pos5 = -0.01, 0.28, 0.01, 0, 3.14, 0
+
+        # Go to home position
+        self.move(location = self.homePosition)
+        # Move from home position towards conveyor belt
+        self.move(location = pos2)
+        # Even closer to the conveyor belt
+        self.move(location = pos3)
+        # Straight over drop location on conveyor belt
+        self.move(location = pos4)
+        # Final drop on conveyor
+        self.move(location = pos5)
+        # Open to drop block
+        self.openGripper()
+        time.sleep(2)
+        # Move away from block
+        self.move(location = pos4)
+        # Move from the conveyor belt towards home position
+        self.move(location = pos3)
+        # Even closer to home position
+        self.move(location = pos2)
+        # Back at home position
+        self.move(location = self.homePosition)
+        time.sleep(0.5)
+    
     def close(self):
         self.robot.close()
 
 
 if __name__ == "__main__":
     print("CREATING ROBOT OBJECCT")
-    robotLeft = Robot("10.1.1.6", (0.25, -0.22, 0.20, 0, 3.14, 0) )
-    robotRight = Robot("10.1.1.5", (0.25, -0.22, 0.20, 0, 3.14, 0) )
+    robotLeft = Robot("10.1.1.6")
+    robotRight = Robot("10.1.1.5")
 
     print("INIT ROBOT")
     robotRight.initRobot()
@@ -60,35 +140,27 @@ if __name__ == "__main__":
     time.sleep(3)
     print("ACTIVATING GRIPPER")
     robotRight.activateAndOpenGripper()
-
-    print("CLOSE GRIPPER")
-    robotRight.closeGripper()
-    time.sleep(2)
     print("OPEN GRIPPER")
     robotRight.openGripper()
     time.sleep(2)
+    print("CLOSE GRIPPER")
+    robotRight.closeGripper()
+    time.sleep(2)
     print("HOME")
-    centerViaPointBeforeHomePos = 0,-0.3,0.2,0,3.14,0
-    robotRight.move(centerViaPointBeforeHomePos)
     robotRight.home()
-     
-    
 
     print("INIT ROBOT LEF")
     robotLeft.initRobot()
     robotLeft.setTCP( (0,0,0.16,0,0,0) )
     time.sleep(3)
     robotLeft.activateAndOpenGripper()
-
-    time.sleep(2)
-    robotLeft.closeGripper()
     robotLeft.openGripper()
     time.sleep(2)
-    robotLeft.move(centerViaPointBeforeHomePos)
+    robotLeft.closeGripper()
+    time.sleep(2)
     robotLeft.home()
 
-    
-    robotRight.close()
+    robotLeft.close()
     robotLeft.close()
 
 

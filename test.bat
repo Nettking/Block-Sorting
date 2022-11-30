@@ -1,2 +1,4 @@
-python test.py
+python detectionTest.py
+pause
+python detectionTest.py
 pause

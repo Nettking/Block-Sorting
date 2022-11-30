@@ -22,7 +22,7 @@ class Camera:
     def processRes(self):
         res = self.getRes()
         x_offset = float(50)
-        y_offset = float(-360)
+        y_offset = float(350)
 
         #reads output from camera
         coords = res.read().decode('utf-8')
@@ -42,6 +42,7 @@ class Camera:
                 x = x1[3]
                 x = (float(x) + x_offset) /1000
                 y = (float(y) - y_offset) /1000
+                print("x,y: " + str(y))
                 time.sleep(3)
                 return x, y
     
