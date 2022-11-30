@@ -81,13 +81,12 @@ class Robot:
         self.move(location = pos3)
         self.move(location = pos2)
         self.move(location = startPosition)
-        self.move(location = pos6)
+        
         self.move(location = pos7)
 
         self.openGripper()
         time.sleep(2)
 
-        self.move(location = pos6)
         self.move(location = startPosition)
 
     def pickUpFromWorkingSpace(self, positionPickup):
@@ -99,7 +98,7 @@ class Robot:
         pos2 = 0.15, -0.10, 0.20, 0, 3.14, 0
         pos3 = 0.15, 0.10, 0.20, 0, 3.14, 0
         pos4 = 0.15, 0.30, 0.20, 0, 3.14, 0
-        pos5 = -0.01, 0.28, 0.01, 0, 3.14, 0
+        pos5 = -0.01, 0.30, 0.01, 0, 3.14, 0
 
         # Go to home position
         self.move(location = self.homePosition)
