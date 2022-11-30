@@ -1,0 +1,3 @@
+<OBJECT_LOC>
+,<REF_OBJECT/>,<DECISION/>,<X/>,<Y/>
+</OBJECT_LOC>
