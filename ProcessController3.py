@@ -56,7 +56,7 @@ if __name__ == "__main__":
     robotRight.activateAndOpenGripper()
     time.sleep(1)
 
-    rob2 = robotRight.robot
+    Conveyor = robotRight.robot
 
 
     print("Create camera objects.")
@@ -129,17 +129,17 @@ if __name__ == "__main__":
             time.sleep(2)
             # If block found start conveyor belt
             print(sensorLeft)
-            rob2.set_digital_out(5, 1)
+            Conveyor.set_digital_out(5, 1)
             #allow digital out 5 to stay active for 0.1s
             time.sleep(0.1)
             #set digital out back to 0
-            rob2.set_digital_out(5, 0)
+            Conveyor.set_digital_out(5, 0)
             time.sleep(21)
-            rob2.set_digital_out(7, 1)
+            Conveyor.set_digital_out(7, 1)
             #allow digital out 5 to stay active for 0.1s
             time.sleep(0.1)
             #set digital out back to 0
-            rob2.set_digital_out(7, 0)
+            Conveyor.set_digital_out(7, 0)
             time.sleep(1)
 
             # Block on right side
@@ -253,17 +253,17 @@ if __name__ == "__main__":
             time.sleep(2)
             # If block found start conveyor belt
             print(sensorRight)
-            rob2.set_digital_out(5, 1)
+            Conveyor.set_digital_out(5, 1)
             #allow digital out 5 to stay active for 0.1s
             time.sleep(0.1)
             #set digital out back to 0
-            rob2.set_digital_out(5, 0)
+            Conveyor.set_digital_out(5, 0)
             time.sleep(21)
-            rob2.set_digital_out(7, 1)
+            Conveyor.set_digital_out(7, 1)
             #allow digital out 5 to stay active for 0.1s
             time.sleep(0.1)
             #set digital out back to 0
-            rob2.set_digital_out(7, 0)
+            Conveyor.set_digital_out(7, 0)
             time.sleep(1)
 
             numberOfBlocks = float(count-1+l2r)
