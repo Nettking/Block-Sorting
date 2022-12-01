@@ -3,9 +3,9 @@
 if __name__ == "__main__":
 
     import time
-    import defs.Classes.Robot as Rob
-    import defs.Classes.Camera as cam
-    import defs.SensorReading as SR
+    import Robot as Rob
+    import Camera as cam
+    import SensorReading as SR
     import urllib.request
     from threading import Thread
     
