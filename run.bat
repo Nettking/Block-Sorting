@@ -1,8 +1,8 @@
-python C:\Users\EliteBook\Documents\GitHub\Block-Sorting\ProcessController3.py
+python C:\Users\EliteBook\Documents\GitHub\Block-Sorting\ProcessController.py
 pause
-python C:\Users\EliteBook\Documents\GitHub\Block-Sorting\ProcessController3.py
+python C:\Users\EliteBook\Documents\GitHub\Block-Sorting\ProcessController.py
 pause
-python C:\Users\EliteBook\Documents\GitHub\Block-Sorting\ProcessController3.py
+python C:\Users\EliteBook\Documents\GitHub\Block-Sorting\ProcessController.py
 pause
-python C:\Users\EliteBook\Documents\GitHub\Block-Sorting\ProcessController3.py
+python C:\Users\EliteBook\Documents\GitHub\Block-Sorting\ProcessController.py
 pause
