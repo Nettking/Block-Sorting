@@ -161,54 +161,53 @@ if __name__ == "__main__":
             #set digital out back to 0
             Conveyor.set_digital_out(7, 0)
             time.sleep(1)
+
+            # Block on right side
+            numberOfBlocks = robotLeft.sentBlocks
+            if robotRight.sentBlocks > 3:
+                zPos = 0.20
+                numberOfBlocks -= 3
+            else:
+                zPos = 0.06
+            offset = numberOfBlocks*0.06
+            block_y_pos = -0.12 - offset
+            posDrop = 0.25, block_y_pos, 0.20, 0, 3.14, 0
+
+            #positions x, y, z, rx, ry, rz
+            startPosition = 0.25, -0.22, 0.20, 0, 3.14, 0
+            pos2 = 0.20, 0.10, 0.30, 0, 3.14, 0
+            pos3 = 0.03, 0.30, 0.30, 0, 3.14, 0
+            pos4 = 0.03, 0.30, 0.25, 0, 3.14, 0
+            pos5 = 0.03, 0.30, 0.03, 0, 3.14, 0
+            posDropOff = 0.25, block_y_pos, zPos, 0, 3.14, 0
+            
+            robotRight.openGripper()
+
+            robotRight.move(location = startPosition)
+            robotRight.move(location = pos2)
+            robotRight.move(location = pos3)
+            robotRight.move(location = pos4)
+            robotRight.move(location = pos5)
+            
+            robotRight.closeGripper()
+
+            robotRight.move(location = pos4)
+            robotRight.move(location = pos3)
+            robotRight.move(location = pos2)
+            robotRight.move(location = startPosition)
+            time.sleep(1)
+            robotRight.move(location = posDrop)
+            robotRight.move(posDropOff)
+            robotRight.openGripper()
+            time.sleep(2)
+
+            robotRight.move(location = startPosition)
+            time.sleep(5)
+            robotRight.home()
+            time.sleep(2)
+            robotLeft.sentBlocks += 1
         except:
-            print("No blocks to send left")
-
-        # Block on right side
-        numberOfBlocks = robotLeft.sentBlocks
-        if robotRight.sentBlocks > 3:
-            zPos = 0.20
-            numberOfBlocks -= 3
-        else:
-            zPos = 0.06
-        offset = numberOfBlocks*0.06
-        block_y_pos = -0.12 - offset
-        posDrop = 0.25, block_y_pos, 0.20, 0, 3.14, 0
-
-        #positions x, y, z, rx, ry, rz
-        startPosition = 0.25, -0.22, 0.20, 0, 3.14, 0
-        pos2 = 0.20, 0.10, 0.30, 0, 3.14, 0
-        pos3 = 0.03, 0.30, 0.30, 0, 3.14, 0
-        pos4 = 0.03, 0.30, 0.25, 0, 3.14, 0
-        pos5 = 0.03, 0.30, 0.03, 0, 3.14, 0
-        posDropOff = 0.25, block_y_pos, zPos, 0, 3.14, 0
-        
-        robotRight.openGripper()
-
-        robotRight.move(location = startPosition)
-        robotRight.move(location = pos2)
-        robotRight.move(location = pos3)
-        robotRight.move(location = pos4)
-        robotRight.move(location = pos5)
-        
-        robotRight.closeGripper()
-
-        robotRight.move(location = pos4)
-        robotRight.move(location = pos3)
-        robotRight.move(location = pos2)
-        robotRight.move(location = startPosition)
-        time.sleep(1)
-        robotRight.move(location = posDrop)
-        robotRight.move(posDropOff)
-        robotRight.openGripper()
-        time.sleep(2)
-
-        robotRight.move(location = startPosition)
-        time.sleep(5)
-        robotRight.home()
-        time.sleep(2)
-        robotLeft.sentBlocks += 1
-
+            print("No blocks to send")
 
 
 
@@ -224,11 +223,11 @@ if __name__ == "__main__":
         # check for blocks to tidy up on right side
 
         # Get loc
-        
-        x,y = cameraRight.processRes()
-        time.sleep(1)
-        global stop_threads, stop_threadL, stop_threadR
         try:
+            x,y = cameraRight.processRes()
+            time.sleep(1)
+            global stop_threads, stop_threadL, stop_threadR
+        
             overBlock = x,y,0.1,0,3.14,0
             # Move over loc
             robotRight.move(overBlock)
@@ -258,6 +257,7 @@ if __name__ == "__main__":
             robotRight.openGripper()
             robotLeft.sentBlocks += 1
         except:
+            print("No block to cleanup")
             stop_threadR = True
             if stop_threadL:
                 stop_threads = True
@@ -268,9 +268,9 @@ if __name__ == "__main__":
         time.sleep(3)
         # Check for blocks to send right to left
         # Get loc
-        x,y = cameraRight.processRes()
-        time.sleep(1)
-        if x: 
+        try:
+            x,y = cameraRight.processRes()
+            time.sleep(1)
             overBlock = x,y,0.1,0,3.14,0
             # Move over loc
             robotRight.move(overBlock)
@@ -341,7 +341,7 @@ if __name__ == "__main__":
             robotLeft.home()
             time.sleep(2)
             robotRight.sentBlocks += 1
-        else:
+        except:
             print("No block found!")
 
 
