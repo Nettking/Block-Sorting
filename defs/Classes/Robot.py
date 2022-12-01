@@ -20,7 +20,11 @@ class Robot:
         self.block_y_pos = -0.22 - (self.sentBlocks * self.pos_multiplyer)
     
     def initRobot(self):
-        self.robot = urx.Robot(self.ip, use_rt=True, urFirm=5.1)
+        try:
+            self.robot = urx.Robot(self.ip, use_rt=True, urFirm=5.1)
+        except:
+            time.sleep(0.3)
+            self.initRobot()
     
     def home(self):
         self.move(self.homePosition)
