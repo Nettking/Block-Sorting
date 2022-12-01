@@ -34,7 +34,7 @@ class Camera:
         # check if no block
         if len(x1) < 2:
             # No block found
-            pass # her bør vi ha noen feilhåndtering
+            pass
         else:
             # NO. Blocks > 0
             if objectLocated == 1:
@@ -45,6 +45,7 @@ class Camera:
                 print("x,y: " + str(y))
                 time.sleep(3)
                 return x, y
+        self.processRes()
     
     def checkForBlock(self):
         '''Check for block'''
