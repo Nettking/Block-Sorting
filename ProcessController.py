@@ -48,7 +48,7 @@ def startRobRight():
     tcp = 0,0,0.16,0,0,0
     robotRight.setTCP(tcp)
     time.sleep(1)
-    print("Robot Left TCP set.")
+    print("Robot Right TCP set.")
     robotRight.activateAndOpenGripper()
     time.sleep(1)
     print("Gripper activated. Testing gripper")
@@ -60,7 +60,7 @@ def startRobRight():
     print("Gripper open. Test completed.")
     robotRight.home()
     time.sleep(2)
-    print("Robot Left ready and at home position.")
+    print("Robot Right ready and at home position.")
     robotRight.activateAndOpenGripper()
     time.sleep(1)
     return robotRight
@@ -76,7 +76,7 @@ Conveyor = robotRight.robot
 def cleanupLeft():
     print("set left cube")
     page = urllib.request.urlopen('http://10.1.1.8/CmdChannel?sINT_1_0')
-    time.sleep(3)
+    time.sleep(2)
     # check for blocks to tidy up on left side 
     
     try:
@@ -123,9 +123,8 @@ def sendRight():
 
     print("set left cylinder")
     page = urllib.request.urlopen('http://10.1.1.8/CmdChannel?sINT_1_1')
-    time.sleep(3)
+    time.sleep(2)
     # Check for blocks to send left to right
-    time.sleep(1)
     # Get loc
     try:
         x,y = cameraLeft.processRes()
@@ -217,7 +216,7 @@ def cleanupRight():
         
     print("set right cylinder")
     page = urllib.request.urlopen('http://10.1.1.7/CmdChannel?sINT_1_1')
-    time.sleep(3)
+    time.sleep(2)
     # check for blocks to tidy up on right side
 
     # Get loc
@@ -359,11 +358,14 @@ if __name__ == "__main__":
     # Starting cleanup threads (both robots clean at the same time)
     Thread(target = moverob).start()
     Thread(target = moverob2).start()
+    
+    
     print("Waiting up to 300 for cleanup to complete")
     counter = 0
     while counter < 300:
         counter+=1
         if stop_threads == True:
+            print("Stop Threads")
             break
         else:
             time.sleep(1)

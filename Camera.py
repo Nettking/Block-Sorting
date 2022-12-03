@@ -4,6 +4,7 @@ import urllib.request
 whichObject = 0
 
 class Camera:
+    countCamera = 0
     def __init__(self, ip, side):
         self.ip = ip
         self.side = side    
@@ -34,7 +35,8 @@ class Camera:
         # check if no block
         if len(x1) < 2:
             # No block found
-            pass
+            countCamera += 1
+
         else:
             # NO. Blocks > 0
             if objectLocated == 1:
@@ -44,8 +46,16 @@ class Camera:
                 y = (float(y) - y_offset) /1000
                 print("x,y: " + str(y))
                 time.sleep(3)
+                countCamera = 0
                 return x, y
-        self.processRes()
+            
+            # try three times before fail
+            if countCamera < 3:
+                self.processRes()
+            else: 
+                print("Unable to process result from camera")
+                raise Exception 
+                
     
     def checkForBlock(self):
         '''Check for block'''
