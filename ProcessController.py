@@ -227,7 +227,7 @@ if __name__ == "__main__":
             x,y = cameraRight.processRes()
             time.sleep(1)
             global stop_threads, stop_threadL, stop_threadR
-        
+            y -= 0.02
             overBlock = x,y,0.1,0,3.14,0
             # Move over loc
             robotRight.move(overBlock)
@@ -241,20 +241,18 @@ if __name__ == "__main__":
             # Move home
             robotRight.home()
             numberOfBlocks = robotLeft.sentBlocks
-            if robotLeft.sentBlocks > 3:
-                zPos = 0.20
-                numberOfBlocks -= 3
-            else:
-                zPos = 0.06
             
-            offset = numberOfBlocks*0.1
-            block_y_pos = -0.12 - offset
-            
+            offset = numberOfBlocks*0.08
+            block_y_pos =  0.04 - offset
+            zPos = 0.06
             posDrop = 0.25, block_y_pos, 0.20, 0, 3.14, 0
             posDropOff = 0.25, block_y_pos, zPos, 0, 3.14, 0
             robotRight.move(posDrop)
             robotRight.move(posDropOff)
+            time.sleep(1)
             robotRight.openGripper()
+            time.sleep(1)
+            robotRight.home()
             robotLeft.sentBlocks += 1
         except:
             print("No block to cleanup")
@@ -361,8 +359,8 @@ if __name__ == "__main__":
             cleanupRight()
     
     # Starting cleanup threads (both robots clean at the same time)
-    Thread(method = moverob).start()
-    Thread(method = moverob2).start()
+    Thread(target = moverob).start()
+    Thread(target = moverob2).start()
     print("Waiting up to 300 for cleanup to complete")
     counter = 0
     while counter < 300:
