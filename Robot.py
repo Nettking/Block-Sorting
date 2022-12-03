@@ -106,15 +106,20 @@ class Robot:
 
         # Go to home position
         self.move(location = self.homePosition)
+        time.sleep(1)
         # Move from home position towards conveyor belt
         self.move(location = pos2)
+        time.sleep(1)
         # Even closer to the conveyor belt
         self.move(location = pos3)
+        time.sleep(1)
         # Straight over drop location on conveyor belt
         self.move(location = pos4)
+        time.sleep(1)
         # Final drop on conveyor
         self.move(location = pos5)
         # Open to drop block
+        time.sleep(2)
         self.openGripper()
         time.sleep(2)
         # Move away from block

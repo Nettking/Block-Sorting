@@ -162,13 +162,13 @@ def sendRight():
         # Block on right side
         numberOfBlocks = robotLeft.sentBlocks
         if robotRight.sentBlocks > 3:
-            zPos = 0.24
+            zPos = 0.12
             numberOfBlocks -= 3
         else:
             zPos = 0.06
         offset = numberOfBlocks*0.06
         block_y_pos = -0.12 - offset
-        posDrop = 0.25, block_y_pos, 0.20, 0, 3.14, 0
+        posDrop = 0.25, block_y_pos, zPos+0.1, 0, 3.14, 0
 
         #positions x, y, z, rx, ry, rz
         startPosition = 0.25, -0.22, 0.20, 0, 3.14, 0
@@ -199,7 +199,7 @@ def sendRight():
         time.sleep(2)
 
         robotRight.move(location = startPosition)
-        time.sleep(5)
+        
         robotRight.home()
         time.sleep(2)
         robotLeft.sentBlocks += 1
@@ -231,6 +231,7 @@ def cleanupRight():
         blockPickUpPos = x,y,0.03,0,3.14,0
         # Move down to block
         robotRight.move(blockPickUpPos)
+        time.sleep(1)
         robotRight.closeGripper()
         time.sleep(2)
         # Move up
@@ -269,15 +270,17 @@ def sendLeft():
         overBlock = x,y,0.1,0,3.14,0
         # Move over loc
         robotRight.move(overBlock)
-        blockPickUpPos = x,y,0.03,0,3.14,0
+        blockPickUpPos = x,y-0.02,0.03,0,3.14,0
         # Move down to block
         robotRight.move(blockPickUpPos)
+        time.sleep(1)
         robotRight.closeGripper()
         time.sleep(2)
         # Move up
         robotRight.move(overBlock)
         # Move home
         robotRight.home()
+        time.sleep(1)
         robotRight.placeOnConveyor()
         #Belt.checkSensorReading(1)
         time.sleep(2)
